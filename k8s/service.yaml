@@ -9,4 +9,4 @@ spec:
     - protocol: TCP
       port: 80  # Exposing port 80 for the service
       targetPort: 5000  # The internal port the Flask app listens on
-  type: LoadBalancer  # This will expose the service externally (if supported by your cloud provider)
+  type: ClusterIP  # This will expose the service externally (if supported by your cloud provider)
