@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
         - name: python-flask-app
-          image: 149536489720.dkr.ecr.us-east-2.amazonaws.com/python-flask-app:833f0ca  # Replace with your Docker image (e.g., 'your-docker-repo/python-flask-app')
+          image: 149536489720.dkr.ecr.us-east-2.amazonaws.com/python-flask-app:c431d29  # Replace with your Docker image (e.g., 'your-docker-repo/python-flask-app')
           ports:
             - containerPort: 5000
