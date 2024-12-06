@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-flask-app
+spec:
+  replicas: 2  # number of pods to run
+  selector:
+    matchLabels:
+      app: python-flask-app
+  template:
+    metadata:
+      labels:
+        app: python-flask-app
+    spec:
+      containers:
+        - name: python-flask-app
+          image: <your-docker-image>  # Replace with your Docker image (e.g., 'your-docker-repo/python-flask-app')
+          ports:
+            - containerPort: 5000
