@@ -71,9 +71,14 @@ jobs:
            aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
            aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
            aws-region: ${{ secrets.AWS_REGION }}
-       - name: Setup kubectl
-         uses: actions-hub/kubectl@master
-         env:
-            KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+       - name: Generate kubeconfig
+         run: |
+           {
+              echo 'EKS_CREDS<<EOF'
+              aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name tecbay-cluster --dry-run | base64
+              echo EOF
+           } >> $GITHUB_ENV
+       - uses: tale/kubectl-action@v1
          with:
-            args: apply -f k8s
+           base64-kube-config: ${{ env.EKS_CREDS }}
+       - run: kubectl apply k8s
