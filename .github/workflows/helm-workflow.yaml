@@ -81,4 +81,4 @@ jobs:
        - uses: tale/kubectl-action@v1
          with:
            base64-kube-config: ${{ env.EKS_CREDS }}
-       - run: kubectl apply k8s
+       - run: kubectl apply -f k8s/
