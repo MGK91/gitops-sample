@@ -52,6 +52,7 @@ jobs:
  deploy-helm:
        runs-on: ubuntu-latest
        needs: docker-build
+       environment: production
        steps:
          - name: Checkout the repository
            uses: actions/checkout@v3
@@ -70,9 +71,4 @@ jobs:
          - name: Deploy with helm
            run: |
              helm upgrade --install python-flask-app --namespace default --set image.repository ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/python-flask-app --set image.tag ${{ env.IMAGE_TAG }}
-           environment: production
 
-             
-          
-            
-          
