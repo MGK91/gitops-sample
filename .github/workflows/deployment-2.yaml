@@ -44,7 +44,7 @@ jobs:
           run: echo "IMAGE_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
         - name: Build Image
           run: |
-            docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/python-flask-app:${{ env.IMAGE_TAG }}
+            docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/python-flask-app:${{ env.IMAGE_TAG }} .
         - name: Push docker image to Repo
           run: |
             docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/python-flask-app:${{ env.IMAGE_TAG }}
