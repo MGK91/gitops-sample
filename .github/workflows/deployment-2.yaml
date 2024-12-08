@@ -70,5 +70,5 @@ jobs:
            uses: azure/setup-helm@v3
          - name: Deploy with helm
            run: |
-             helm upgrade --install python-flask-app --namespace default --set image.repository ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/python-flask-app --set image.tag ${{ env.IMAGE_TAG }}
+             helm upgrade --install flask-app --namespace default --set image.repository ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/python-flask-app --set image.tag ${{ env.IMAGE_TAG }}
 
