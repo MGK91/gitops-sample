@@ -3,7 +3,7 @@ replicaCount: 2
 image:
   repository: 149536489720.dkr.ecr.us-east-2.amazonaws.com/python-flask-app
   pullPolicy: IfNotPresent
-  tag: 833f0ca  # This can be dynamically updated later
+  tag: 31b0ee3  # This can be dynamically updated later
 
 service:
   type: ClusterIP
