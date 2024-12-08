@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-flask-app
+  annotations:
+    argocd-image-updater.argoproj.io/image-1: "<aws-account-id>.dkr.ecr.<region>.amazonaws.com/python-flask-app"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: python-flask-app
+  template:
+    metadata:
+      labels:
+        app: python-flask-app
+    spec:
+      containers:
+        - name: python-flask-app
+          image: "<aws-account-id>.dkr.ecr.<region>.amazonaws.com/python-flask-app:{{ IMAGE_TAG }}"  # Use dynamic tag for image
+          ports:
+            - containerPort: 5000

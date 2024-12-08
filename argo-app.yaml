@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: flask-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/MGK91/gitops-sample'
+    targetRevision: HEAD
+    path: flask-app/  # Path to the Helm chart in your repository
+    helm:
+      valueFiles:
+        - values.yaml  # You can specify a custom values file if needed
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: default  # Namespace to deploy the app to
+  syncPolicy:
+    automated:
+      prune: true   # Automatically remove resources no longer tracked by Helm chart
+      selfHeal: true  # Automatically sync the app if the state is changed manually
+    syncOptions:
+      - CreateNamespace=true  # Automatically create the namespace if it doesn't exist

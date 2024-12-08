@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: flask-app
+  annotations:
+    argocd-image-updater.argoproj.io/image-1: "149536489720.dkr.ecr.us-east-2.amazonaws.com/python-flask-app"
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
