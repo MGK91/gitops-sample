@@ -38,16 +38,16 @@ jobs:
 
         - name: Login to ECR 
           run: |
-             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ AWS_ACCOUNT_ID }}.dkr.ecr.${{ AWS_REGION }}.amazonaws.com
+             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
         - name: Generate Image Tag (GIT Commit hash)
           id: image_tag
           run: echo "IMAGE_TAG=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
         - name: Build Image
           run: |
-            docker build -t ${{ AWS_ACCOUNT_ID }}.dkr.ecr.${{ AWS_REGION }}.amazonaws.com/python-flask-app:${{ env.IMAGE_TAG }}
+            docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/python-flask-app:${{ env.IMAGE_TAG }}
         - name: Push docker image to Repo
           run: |
-            docker push ${{ AWS_ACCOUNT_ID }}.dkr.ecr.${{ AWS_REGION }}.amazonaws.com/python-flask-app:${{ env.IMAGE_TAG }}
+            docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/python-flask-app:${{ env.IMAGE_TAG }}
           
  deploy-helm:
        runs-on: ubuntu-latest
@@ -60,16 +60,16 @@ jobs:
            with:
             aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
             aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws-region: ${{ AWS_REGION }}
+            aws-region: ${{ secrets.AWS_REGION }}
          - name: Setup kubectl
            uses: azure/setup-kubectl@v3
          - name: Configure kubeconfig
-           run: aws eks update-kubeconfig --region ${{ AWS_REGION }} --name tecbay-cluster
+           run: aws eks update-kubeconfig --region ${{ secrets.AWS_REGION }} --name tecbay-cluster
          - name: Install helm
            uses: azure/setup-helm@v3
          - name: Deploy with helm
            run: |
-             helm upgrade --install python-flask-app --namespace default --set image.repository ${{ AWS_ACCOUNT_ID }}.dkr.ecr.${{ AWS_REGION }}.amazonaws.com/python-flask-app --set image.tag ${{ env.IMAGE_TAG }}
+             helm upgrade --install python-flask-app --namespace default --set image.repository ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/python-flask-app --set image.tag ${{ env.IMAGE_TAG }}
            environment: production
 
              
