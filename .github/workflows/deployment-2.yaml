@@ -71,6 +71,7 @@ jobs:
            run: |
              helm upgrade --install python-flask-app --namespace default --set image.repository ${{ AWS_ACCOUNT_ID }}.dkr.ecr.${{ AWS_REGION }}.amazonaws.com/python-flask-app --set image.tag ${{ env.IMAGE_TAG }}
            environment: production
+
              
           
             
